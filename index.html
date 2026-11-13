@@ -140,11 +140,11 @@ function addE(){const a=parseFloat(F.pa);if(!(a>0))return toast('Enter an amount
 function addC(){const c=(F.cn||'').trim();if(!c||S.cats.includes(c))return;S.cats.push(c);F.cn='';save();go()}
 
 /* WEEK */
-const monKey=()=>{const d=new Date();d.setDate(d.getDate()-(d.getDay()+6)%7);return dk(d)};
+const monKey=()=>{const d=new Date();d.setDate(d.getDate()-d.getDay());return dk(d)};
 function rollWeek(){const m=monKey();if(S.week.mon!==m){S.week.items=S.week.items.filter(i=>!i.done);S.week.mon=m;save()}}
 function vWeek(){const I=S.week.items;return `<h1>Week</h1><div class=card><div class=mu>Week of ${sd(S.week.mon)} · ${I.filter(i=>i.done).length} of ${I.length} done</div><div class=add><input placeholder="Add a task" value="${v('wn')}" oninput="F.wn=this.value" onkeydown="if(event.key==='Enter')addT()"><button class=pri onclick="addT()">Add</button></div></div>
 <div class=card>${I.map(i=>`<div class=li><label class=row style="justify-content:flex-start;flex:1"><input type=checkbox ${i.done?'checked':''} onchange="tg('${i.id}')"><span style="${i.done?'text-decoration:line-through;color:var(--mu)':''}">${esc(i.t)}</span></label><button class=dng onclick="S.week.items=S.week.items.filter(z=>z.id!=='${i.id}');save();go()">✕</button></div>`).join('')||'<div class=mu>No tasks this week.</div>'}</div>
-<p class=mu>On Monday, ticked tasks disappear and unticked ones carry over.</p>`}
+<p class=mu>On Sunday, ticked tasks disappear and unticked ones carry over.</p>`}
 function addT(){const t=(F.wn||'').trim();if(!t)return;S.week.items.push({id:uid(),t,done:false});F.wn='';save();go()}
 function tg(id){const i=S.week.items.find(x=>x.id===id);i.done=!i.done;save();go()}
 
